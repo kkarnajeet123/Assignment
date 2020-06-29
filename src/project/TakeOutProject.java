@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class TakeOutProject {
 
+	public static void selectionOption() {
+		
+	}
 	public static void displayMainMenu() {
 		
 		System.out.println("-----------------------");
@@ -12,7 +15,6 @@ public class TakeOutProject {
 		System.out.println(" 3. American	");
 		System.out.println("-----------------------\n");
 		System.out.println("Choose what type of food you'd like to order:");
-		
 		
 		
 	}
@@ -34,10 +36,11 @@ public class TakeOutProject {
 		
 	}
 	public static void displayAmericanFoodMenu() {
+		System.out.println("----------------------------------------------------------------------\n");
 		System.out.println("1. Hamburger and Hot Dog Tray - includes buns and condiments - feeds 8 - 21.99");
 		System.out.println("2. Grilled Chicken Sandwich and Mozzarella Sticks Tray - includes dipping sauces -Feeds 5 - 22.99");
 		System.out.println("3. Barbeque Tray - includes buns and peach cobbler - Feeds 10 - 26.99");
-		System.out.println("-----------------------\n");
+		System.out.println("----------------------------------------------------------------------\n");
 		
 	}
 	
@@ -58,24 +61,43 @@ public class TakeOutProject {
 		
 		return SubTotal;
 	}
-	/*
+	
 	public static double getTax(double subtotal, double taxrate) {
+		double getTax=0;
 		
+		getTax=subtotal*taxrate;
+		
+		return getTax;
 	}
+	
 	public static double getTip(double subtotal, double tipRate) {
-		
+		double getTip;
+		getTip=subtotal*tipRate;
+		return getTip;
+				
 	}
+	
 	public static double getGrandTotal(double subtotal, double tax, double tip) {
-		
+		double getGrandTotal=0;
+		getGrandTotal=subtotal+tax+tip;
+		return getGrandTotal;
 	}
+	
 	public static double pricePerPerson(double grandTotal, int people) {
 		
-	}
-	public static int determineLeftOvers(int feeds, int trays, int people) {
+		double Perpersonprice=0;
+		
+		Perpersonprice = grandTotal/people;
+		
+		return Perpersonprice;
 		
 	}
 	
-	*/
+	public static int determineLeftOvers(int feeds, int trays, int people) {
+		return ((trays * feeds) - people);
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		System.out.println("Enter total number of people: ");
@@ -88,7 +110,8 @@ public class TakeOutProject {
 		 }
 		 else {
 		 int  feeds=0;
-		 double price=0;
+		 double price=0, tax=0.07, tips=0.15;
+		 
 		String decision= "N";
 		boolean dec1=true;
 		 
@@ -271,15 +294,48 @@ public class TakeOutProject {
 		
 		
 		//System.out.println(dec1);
+		/*
 		System.out.println("Your decision is: "+decision);
 		System.out.println("-----------------------------");
 		System.out.println("Total number people: "+people);
 		System.out.println("Your feeds is: "+feeds);
+		*/
 		System.out.println("-----------------------------");
+		//number of trays
 		int trays=TakeOutProject.determineTrays(people,feeds);
-		System.out.println("Total Trays: "+trays);
-		System.out.println("-----------------------------");
-		System.out.println("Your total price before tax is: "+price+ " dollars");
+		System.out.println("You need "+trays +" trays");
+		System.out.println("");
+		System.out.println("Feeds: "+feeds);
+		System.out.println("");
+		double subtotal=TakeOutProject.getSubtotal(price, trays);
+		String convertSubtotal = String.format("%.2f", subtotal);
+		System.out.println("Price for "+people+" people ("+trays+" trays): "+convertSubtotal);
+		System.out.println("");
+		double calculateTax=TakeOutProject.getTax(subtotal, tax);
+		String convertTax = String.format("%.2f", calculateTax);
+		System.out.println("Tax: "+convertTax);
+		System.out.println("");
+		double calculateTips = TakeOutProject.getTip(subtotal, tips);
+		String convertTips = String.format("%.2f", calculateTips);
+		System.out.println("Tip: "+convertTips);
+		System.out.println("");
+		double grandTotal= TakeOutProject.getGrandTotal(subtotal, calculateTax, calculateTips);
+		String convertGrandTotal = String.format("%.2f", grandTotal);
+		System.out.println("Total (food, tax,tips): "+convertGrandTotal);
+		System.out.println("");
+		double perperson = TakeOutProject.pricePerPerson(grandTotal, people);
+		String convertperperson = String.format("%.2f", perperson);
+		System.out.println("Price per person: "+convertperperson);
+		System.out.println("");
+		int leftovers = TakeOutProject.determineLeftOvers(feeds, trays, people);
+		System.out.println("Leftover serviings for the delivery person: "+leftovers);
+		//Total Price
+		/*
+		System.out.println("");
+		String covertprice = String.format("%.2f", price);
+		System.out.println("Your total price before tax is: "+covertprice+ " dollars");
+		*/
+	
 		
 		 }
 	}
