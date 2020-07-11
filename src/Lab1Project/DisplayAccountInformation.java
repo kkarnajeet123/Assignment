@@ -1,73 +1,110 @@
 package Lab1Project;
 
-import java.util.Scanner;
+//import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
+//import java.util.Scanner;
 
 public class DisplayAccountInformation  {
 	
-	public static void open(Account account) {
-		account.openAccount();
-	}
-
-	public static void main(String[] args) {	
-Scanner sc = new Scanner(System.in);
-		
-		System.out.println("Which account to open? ");
-		String choice = sc.next().toLowerCase();
-		
-		Account account = null;
-		
-		
-		switch (choice) {
-			
-			case "saving":
-				System.out.println("Please Enter your first name: ");
-				String first_name= sc.next().toLowerCase();
-				System.out.println("Please Enter your last name: ");
-				String last_name= sc.next().toLowerCase();
-				System.out.println("Please Enter your initial balance: ");
-				double balance= sc.nextDouble();
-				
-				System.out.println("================================");
-				System.out.println("Welcome to ABC Bank!! ");
-				System.out.println("");
-				account = new SavingAccount();
-				
-				System.out.println("");
-				BankAccount bk= new BankAccount(first_name,last_name,balance);
-				bk.displayAccountInfo(first_name, last_name, balance);
-							
-				break;
-				
-			case "current":
-				System.out.println("Please Enter your first name: ");
-				first_name= sc.next().toLowerCase();
-				System.out.println("Please Enter your last name: ");
-				last_name= sc.next().toLowerCase();
-				System.out.println("Please Enter your initial balance: ");
-				balance= sc.nextDouble();
-				System.out.println("================================");
-				System.out.println("Welcome to ABC Bank!! ");
-				System.out.println("");
-				account = new CurrentAccount();
-				BankAccount bk1= new BankAccount(first_name,last_name,balance);
-				bk1.displayAccountInfo(first_name, last_name, balance);
-				
-				break;
-			
-			default:
-				System.out.println("Wrong Selection!!!");
-			
-		}
-		
-		if(account!=null) {
-			System.out.println("================================");
-			open(account);
-		}
-		
-		sc.close();
-
-		}
+	public static void openAccount(Account ac) {
+		ac.openAccount();
+	};
 	
+	
+	public static void main(String[] args) {	
+		int result1;
+		do {
+		String [] decision = new String[] {"Create Account".toLowerCase(), "Deposit".toLowerCase(),"Withdraw".toLowerCase()};
+		String selection =String.valueOf(JOptionPane.showInputDialog(null, "Please select the option below: ", 
+				"Welcome to ABC Bank", JOptionPane.QUESTION_MESSAGE,null, decision,decision[0]));
 		
+		int result;
+		String[] option = new String[2];
+		option[0]="Current".toLowerCase();
+		option[1]="Saving".toLowerCase();
+		
+		
+		
+		if(selection.equals("create account")) {
+		
+		do {
+		
+			String input =String.valueOf(JOptionPane.showInputDialog(null, 
+					"Please select the option below: ", "Welcome to ABC Bank", JOptionPane.QUESTION_MESSAGE,null, 
+					option,option[0]));
+			
+			String name= JOptionPane.showInputDialog("Enter your full name: ");
+			double balance= Double.parseDouble(JOptionPane.showInputDialog("Balance: "));
+			BankAccount ba = new BankAccount(name,balance);
+		switch (input) {
+		
+		case "saving":
+			
+			
+			ba.displayAccountInfo();
+			SavingAccount sa = new SavingAccount();
+			sa.openAccount();			
+
+			break;
+		case "current":
+			
+			ba.displayAccountInfo();
+			CurrentAccount ca = new CurrentAccount();
+			ca.openAccount();	
+			
+			
+			break;
+		default:
+			JOptionPane.showMessageDialog(null, "Invalid Input!!!");
+			
+		}
+		
+		
+		
+		 if(JOptionPane.showConfirmDialog(null, "Would you like to create again?", "Account Info", 
+				 JOptionPane.YES_NO_CANCEL_OPTION)== JOptionPane.YES_OPTION) {
+			 result=1;
+			 break;
+		 }else {
+			 result=2;
+			 JOptionPane.showMessageDialog(null, "Thank you!! See you again!!");
+			 break;
+		 }
+		 
+		}while (result==1);
+		
+		System.out.println("==================================");
+		System.out.println("Thank you!! Have a nice day!! ");
+	
+		}else if(selection.equals("deposit")) {
+			
+			String name=JOptionPane.showInputDialog("Enter your name: ");
+			double balance = Double.parseDouble(JOptionPane.showInputDialog("Enter your balance"));
+			double interest =6;
+			BankAccount ba = new BankAccount(name,balance);
+			ba.depositFund(interest,balance);
+		}
+		else if (selection.equals("withdraw")){
+			String name=JOptionPane.showInputDialog("Enter your name: ");
+			double balance = Double.parseDouble(JOptionPane.showInputDialog("Enter your balance"));
+			double fee=200.00;
+			BankAccount ba = new BankAccount(name,balance);
+			ba.withdrawFund(balance,fee);
+		}
+		
+		 if(JOptionPane.showConfirmDialog(null, "Please check the option below", "Account Info", 
+				 JOptionPane.YES_NO_CANCEL_OPTION)== JOptionPane.YES_OPTION) {
+			 result1=1;
+			 break;
+		 }else {
+			 result1=2;
+			 JOptionPane.showMessageDialog(null, "Thank you!! See you again!!");
+			 break;
+		 }
+		}while(result1==1);
 	}
 
+
+}
