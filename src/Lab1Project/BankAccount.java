@@ -3,47 +3,62 @@ package Lab1Project;
 public  class BankAccount {
 
 	//private double accountNum;
-	static int accountNum=0;
-	private String firstname, lastname;
-	private double balance;
 	
-	public BankAccount(String first_name, String last_name, double balance) {
-		this.firstname=first_name;
-		this.lastname=last_name;
-		this.balance=balance;
+	private String fullname;
+	private double initialBalance;
+	private int accountNum;
+	private static int accountNumber=1000;
+	
+	
+	public BankAccount(String fullname) {
+		this.fullname =fullname;
+		this.initialBalance=0;
+		this.accountNum=accountNumber++;
+				
+	}
+	
+	public BankAccount(String fullname, double initialBalance) {
+		this.fullname =fullname;
+		this.initialBalance=initialBalance;
+		this.accountNum=accountNumber++;
+		
+		
 	}
 
-	public void displayAccountInfo(String first_name, String last_name, double balance) {
-		int account_number=0;
-				account_number++;
-		System.out.println("Account Number: "+ account_number);
-		System.out.println("Account Holder Name: "+ first_name+ " "+last_name);
+	public void displayAccountInfo() {
+		System.out.println("===================================================");
+		System.out.println("Account Number: "+ accountNum);
+		System.out.println("Account Holder Name: "+ fullname);
+		System.out.println("Balance: "+String.format("%.2f", initialBalance));
 		
-		if(balance!=0) {
-		System.out.println("Balance: "+String.format("%.2f", balance));
-		}else {
-			balance=0;
-			System.out.println("Balance: "+String.format("%.2f", balance));
-		}
 		
 	}
 	
-	public double withdrawFund(double balance, double withdraw_fee) {
+	public void withdrawFund(double amount) {
 		
-		double new_balanceWithdrawn=balance-withdraw_fee;
+		initialBalance=initialBalance-amount;
 				
-		return new_balanceWithdrawn;
-		
+		displayAccountInfo();
 	}
 	
-	public double depositFund(double balance, double deposit_amount) {
+	public void withdrawFund(double amount, double fee) {
 		
-		double new_balanceDeposit=balance+deposit_amount;
-				
-		return new_balanceDeposit;
+		 initialBalance=initialBalance-(amount-fee);		
 		
+		 displayAccountInfo();
 	}
 	
+	public void depositFund(double amount) {
+		initialBalance=initialBalance+amount;
+		displayAccountInfo();
+	}
+	
+	
+	public void depositFund(double interest, double deposit_amount) {
+		
+		initialBalance=deposit_amount +(initialBalance*interest/100);
+		displayAccountInfo();
+	}
 	
 	
 }
