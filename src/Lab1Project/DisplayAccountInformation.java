@@ -13,21 +13,38 @@ public class DisplayAccountInformation  {
 	};
 	
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
+		
+		Object [] option0 = new Object[] {"Regular Customer".toUpperCase(),"New Customer".toUpperCase() ,"Quit".toUpperCase()};
+		
+		
+		int decision0=JOptionPane.showOptionDialog(null, "Please Check The Option Below", 
+				"Welcome to ABC Bank", JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,null,option0,null);
+		
+		if(decision0 ==0) {
+			System.out.println("You press Regular Customer");
+			
+		}else if(decision0==1) {
+			System.out.println("You press New Customer");
+		}else {
+			System.out.println("You press Quit");
+		}
+		
+		
+		
+		//=========================================================================================
 		int result1;
 		do {
-		String [] decision = new String[] {"Create Account".toLowerCase(), "Deposit".toLowerCase(),"Withdraw".toLowerCase()};
+		String [] decision = new String[] {"Create Account".toUpperCase(), "Deposit".toUpperCase(),"Withdraw".toUpperCase()};
 		String selection =String.valueOf(JOptionPane.showInputDialog(null, "Please select the option below: ", 
 				"Welcome to ABC Bank", JOptionPane.QUESTION_MESSAGE,null, decision,decision[0]));
 		
 		int result;
-		String[] option = new String[2];
-		option[0]="Current".toLowerCase();
-		option[1]="Saving".toLowerCase();
+		String[] option = new String[] {"Current Account".toUpperCase(), "Saving Account".toUpperCase()};
 		
 		
 		
-		if(selection.equals("create account")) {
+		if(selection.toLowerCase().equals("create account")) {
 		
 		do {
 		
@@ -38,7 +55,7 @@ public class DisplayAccountInformation  {
 			String name= JOptionPane.showInputDialog("Enter your full name: ");
 			double balance= Double.parseDouble(JOptionPane.showInputDialog("Balance: "));
 			BankAccount ba = new BankAccount(name,balance);
-		switch (input) {
+		switch (input.toLowerCase()) {
 		
 		case "saving":
 			
@@ -78,7 +95,7 @@ public class DisplayAccountInformation  {
 		System.out.println("==================================");
 		System.out.println("Thank you!! Have a nice day!! ");
 	
-		}else if(selection.equals("deposit")) {
+		}else if(selection.toLowerCase().equals("deposit")) {
 			
 			String name=JOptionPane.showInputDialog("Enter your name: ");
 			double balance = Double.parseDouble(JOptionPane.showInputDialog("Enter your balance"));
@@ -86,7 +103,7 @@ public class DisplayAccountInformation  {
 			BankAccount ba = new BankAccount(name,balance);
 			ba.depositFund(interest,balance);
 		}
-		else if (selection.equals("withdraw")){
+		else if (selection.toLowerCase().equals("withdraw")){
 			String name=JOptionPane.showInputDialog("Enter your name: ");
 			double balance = Double.parseDouble(JOptionPane.showInputDialog("Enter your balance"));
 			double fee=200.00;
